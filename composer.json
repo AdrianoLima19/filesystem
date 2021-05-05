@@ -1,0 +1,13 @@
+{
+  "name": "note/filesystem",
+  "description": "A filesystem manager",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Note\\Filesystem\\": "./src/",
+      "Note\\Contracts\\": "./contracts/"
+    }
+  }
+}
