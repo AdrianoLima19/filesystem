@@ -40,7 +40,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string|null
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToReadFile
      */
     public function read($path);
 
@@ -48,7 +50,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return resource|null
+     * @return resource|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToReadFile
      */
     public function readStream($path);
 
@@ -59,6 +63,8 @@ interface Filesystem
      * @param string|resource $contents
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToWriteFile
      */
     public function write($path, $contents, $options = []);
 
@@ -69,6 +75,8 @@ interface Filesystem
      * @param resource $contents
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToWriteFile
      */
     public function writeStream($path, $contents, $options = []);
 
@@ -78,6 +86,8 @@ interface Filesystem
      * @param string $path
      * @param string $contents
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToWriteFile
      */
     public function prepend($path, $contents);
 
@@ -87,6 +97,8 @@ interface Filesystem
      * @param string $path
      * @param string $contents
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToWriteFile
      */
     public function append($path, $contents);
 
@@ -95,7 +107,9 @@ interface Filesystem
      *
      * @param string $path
      * @param boolean $code
-     * @return string|integer
+     * @return string|integer|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function getVisibility($path, $code = false);
 
@@ -103,8 +117,10 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @param string|int $visibility
+     * @param string|integer $visibility
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToSetMetadata
      */
     public function setVisibility($path, $visibility);
 
@@ -113,6 +129,8 @@ interface Filesystem
      *
      * @param string $path
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToDeleteFile
      */
     public function deleteFile($path);
 
@@ -121,6 +139,9 @@ interface Filesystem
      *
      * @param string $path
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToDeleteFile
+     * @throws \Note\Filesystem\Exception\UnableToDeleteDirectory
      */
     public function deleteDirectory($path);
 
@@ -129,6 +150,9 @@ interface Filesystem
      *
      * @param string $path
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToDeleteFile
+     * @throws \Note\Filesystem\Exception\UnableToDeleteDirectory
      */
     public function delete($path);
 
@@ -138,6 +162,8 @@ interface Filesystem
      * @param string $path
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToCreateDirectory
      */
     public function makeDirectory($path, $options = []);
 
@@ -146,6 +172,9 @@ interface Filesystem
      *
      * @param string $path
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToDeleteFile
+     * @throws \Note\Filesystem\Exception\UnableToDeleteDirectory
      */
     public function cleanDirectory($path);
 
@@ -156,6 +185,8 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToCopyFile
      */
     public function copyFile($from, $to, $options = []);
 
@@ -166,6 +197,9 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToCopyFile
+     * @throws \Note\Filesystem\Exception\UnableToCopyDirectory
      */
     public function copyDirectory($from, $to, $options = []);
 
@@ -176,6 +210,9 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToCopyFile
+     * @throws \Note\Filesystem\Exception\UnableToCopyDirectory
      */
     public function copy($from, $to, $options = []);
 
@@ -186,6 +223,8 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws UnableToMoveFile
      */
     public function moveFile($from, $to, $options = []);
 
@@ -196,6 +235,9 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToMoveFile
+     * @throws \Note\Filesystem\Exception\UnableToMoveDirectory
      */
     public function moveDirectory($from, $to, $options = []);
 
@@ -206,6 +248,9 @@ interface Filesystem
      * @param string $to
      * @param array $options
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToMoveFile
+     * @throws \Note\Filesystem\Exception\UnableToMoveDirectory
      */
     public function move($from, $to, $options = []);
 
@@ -229,7 +274,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return integer
+     * @return integer|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function fileSize($path);
 
@@ -237,7 +284,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return integer
+     * @return integer|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function lastModified($path);
 
@@ -245,7 +294,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function mimeType($path);
 
@@ -253,7 +304,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function type($path);
 
@@ -261,7 +314,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function name($path);
 
@@ -269,7 +324,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function basename($path);
 
@@ -277,7 +334,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function dirname($path);
 
@@ -285,7 +344,9 @@ interface Filesystem
      * Undocumented function
      *
      * @param string $path
-     * @return string
+     * @return string|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToRetrieveMetadata
      */
     public function extension($path);
 
@@ -307,58 +368,63 @@ interface Filesystem
 
     /**
      * Undocumented function
-     * @internal //| decidir qual tipo de retorno.
      * 
-     * @param string $path
+     * @param string|null $path
      * @param boolean $recursive
-     * @return mixed 
+     * @return iterable
      */
     public function listContents($path = null, $recursive = false);
 
     /**
      * Undocumented function
-     * @internal //| decidir qual tipo de retorno.
      * 
-     * @param string $path
+     * @param string|null $path
      * @param boolean $recursive
-     * @return mixed 
+     * @return iterable
      */
-    public function files($path = null, $recursive = false);
+    public function listFiles($path = null, $recursive = false);
 
     /**
      * Undocumented function
-     * @internal //| decidir qual tipo de retorno.
      * 
-     * @param string $path
+     * @param string|null $path
      * @param boolean $recursive
-     * @return mixed 
+     * @return iterable
      */
-    public function directories($path = null, $recursive = false);
+    public function listDirectories($path = null, $recursive = false);
 
     /**
      * Undocumented function
-     * @internal //| decidir qual tipo de retorno.
      * 
-     * @param string $path
-     * @return mixed 
+     * @param string|null $path
+     * @return iterable
      */
-    public function allFiles($path = null);
+    public function listAllContents($path = null);
 
     /**
      * Undocumented function
-     * @internal //| decidir qual tipo de retorno.
      * 
-     * @param string $path
-     * @return mixed 
+     * @param string|null $path
+     * @return iterable
      */
-    public function allDirectories($path = null);
+    public function listAllFiles($path = null);
+
+    /**
+     * Undocumented function
+     * 
+     * @param string|null $path
+     * @return iterable
+     */
+    public function listAllDirectories($path = null);
 
     /**
      * Undocumented function
      *
      * @param string $dirname
-     * @param string|int $visibility
+     * @param int $visibility
      * @return boolean
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToCreateDirectory
      */
     public function ensureDirectoryExists($dirname, $visibility);
 
@@ -367,7 +433,9 @@ interface Filesystem
      *
      * @param string $pattern
      * @param integer $flags
-     * @return array
+     * @return array|false
+     * 
+     * @throws \Note\Filesystem\Exception\UnableToReadFile
      */
     public function glob($pattern, $flags = 0);
 }
