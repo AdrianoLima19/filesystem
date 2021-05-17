@@ -5,20 +5,42 @@ declare(strict_types=1);
 namespace Note\Filesystem;
 
 use Note\Contracts\Filesystem\Filesystem as FilesystemContract;
+use Note\Contracts\Filesystem\FilesystemAdapter;
 
 /**
  * Class Filesystem
  * 
+ * @version 1.0.0-dev
  * @license MIT
  * @package Note\Filesystem
  */
-class Filesystem implements FilesystemContract
+class Filesystem extends FilesystemContract
 {
+    /**
+     * Undocumented variable
+     *
+     * @var FilesystemAdapter
+     */
+    private $adapter;
+
+    /**
+     * Undocumented function
+     *
+     * @param FilesystemAdapter $adapter
+     * @return void
+     */
+    public function __construct(
+        FilesystemAdapter $adapter
+    ) {
+        $this->adapter = $adapter;
+    }
+
     /**
      * {@inheritDoc}
      */
     public function fileExists($path)
     {
+        return $this->adapter->fileExists($path);
     }
 
     /**
@@ -26,6 +48,7 @@ class Filesystem implements FilesystemContract
      */
     public function dirExists($path)
     {
+        return $this->adapter->dirExists($path);
     }
 
     /**
@@ -33,6 +56,7 @@ class Filesystem implements FilesystemContract
      */
     public function exists($path)
     {
+        return $this->adapter->exists($path);
     }
 
     /**
@@ -40,6 +64,7 @@ class Filesystem implements FilesystemContract
      */
     public function read($path)
     {
+        return $this->adapter->read($path);
     }
 
     /**
@@ -47,6 +72,7 @@ class Filesystem implements FilesystemContract
      */
     public function readStream($path)
     {
+        return $this->adapter->readStream($path);
     }
 
     /**
@@ -54,6 +80,7 @@ class Filesystem implements FilesystemContract
      */
     public function write($path, $contents, $options = [])
     {
+        return $this->adapter->write($path, $contents, $options);
     }
 
     /**
@@ -61,6 +88,10 @@ class Filesystem implements FilesystemContract
      */
     public function writeStream($path, $contents, $options = [])
     {
+        $this->isResource($contents);
+        $this->rewindStream($contents);
+
+        return $this->adapter->writeStream($path, $contents, $options);
     }
 
     /**
@@ -68,6 +99,7 @@ class Filesystem implements FilesystemContract
      */
     public function prepend($path, $contents)
     {
+        return $this->adapter->prepend($path, $contents);
     }
 
     /**
@@ -75,6 +107,7 @@ class Filesystem implements FilesystemContract
      */
     public function append($path, $contents)
     {
+        return $this->adapter->append($path, $contents);
     }
 
     /**
@@ -82,6 +115,7 @@ class Filesystem implements FilesystemContract
      */
     public function getVisibility($path, $code = false)
     {
+        return $this->adapter->getVisibility($path, $code);
     }
 
     /**
@@ -89,6 +123,7 @@ class Filesystem implements FilesystemContract
      */
     public function setVisibility($path, $visibility)
     {
+        return $this->adapter->setVisibility($path, $visibility);
     }
 
     /**
@@ -96,6 +131,7 @@ class Filesystem implements FilesystemContract
      */
     public function deleteFile($path)
     {
+        return $this->adapter->deleteFile($path);
     }
 
     /**
@@ -103,6 +139,7 @@ class Filesystem implements FilesystemContract
      */
     public function deleteDirectory($path)
     {
+        return $this->adapter->deleteDirectory($path);
     }
 
     /**
@@ -110,6 +147,7 @@ class Filesystem implements FilesystemContract
      */
     public function delete($path)
     {
+        return $this->adapter->delete($path);
     }
 
     /**
@@ -117,6 +155,7 @@ class Filesystem implements FilesystemContract
      */
     public function makeDirectory($path, $options = [])
     {
+        return $this->adapter->makeDirectory($path, $options);
     }
 
     /**
@@ -124,6 +163,7 @@ class Filesystem implements FilesystemContract
      */
     public function cleanDirectory($path)
     {
+        return $this->adapter->cleanDirectory($path);
     }
 
     /**
@@ -131,6 +171,7 @@ class Filesystem implements FilesystemContract
      */
     public function copyFile($from, $to, $options = [])
     {
+        return $this->adapter->copyFile($from, $to, $options);
     }
 
     /**
@@ -138,6 +179,7 @@ class Filesystem implements FilesystemContract
      */
     public function copyDirectory($from, $to, $options = [])
     {
+        return $this->adapter->copyDirectory($from, $to, $options);
     }
 
     /**
@@ -145,6 +187,7 @@ class Filesystem implements FilesystemContract
      */
     public function copy($from, $to, $options = [])
     {
+        return $this->adapter->copy($from, $to, $options);
     }
 
     /**
@@ -152,6 +195,7 @@ class Filesystem implements FilesystemContract
      */
     public function moveFile($from, $to, $options = [])
     {
+        return $this->adapter->moveFile($from, $to, $options);
     }
 
     /**
@@ -159,6 +203,7 @@ class Filesystem implements FilesystemContract
      */
     public function moveDirectory($from, $to, $options = [])
     {
+        return $this->adapter->moveDirectory($from, $to, $options);
     }
 
     /**
@@ -166,6 +211,7 @@ class Filesystem implements FilesystemContract
      */
     public function move($from, $to, $options = [])
     {
+        return $this->adapter->move($from, $to, $options);
     }
 
     /**
@@ -173,6 +219,7 @@ class Filesystem implements FilesystemContract
      */
     public function isFile($path)
     {
+        return $this->adapter->isFile($path);
     }
 
     /**
@@ -180,6 +227,7 @@ class Filesystem implements FilesystemContract
      */
     public function isDir($path)
     {
+        return $this->adapter->isDir($path);
     }
 
     /**
@@ -187,6 +235,7 @@ class Filesystem implements FilesystemContract
      */
     public function fileSize($path)
     {
+        return $this->adapter->fileSize($path);
     }
 
     /**
@@ -194,6 +243,7 @@ class Filesystem implements FilesystemContract
      */
     public function lastModified($path)
     {
+        return $this->adapter->lastModified($path);
     }
 
     /**
@@ -201,6 +251,7 @@ class Filesystem implements FilesystemContract
      */
     public function mimeType($path)
     {
+        return $this->adapter->mimeType($path);
     }
 
     /**
@@ -208,6 +259,7 @@ class Filesystem implements FilesystemContract
      */
     public function type($path)
     {
+        return $this->adapter->type($path);
     }
 
     /**
@@ -215,6 +267,7 @@ class Filesystem implements FilesystemContract
      */
     public function name($path)
     {
+        return $this->adapter->name($path);
     }
 
     /**
@@ -222,6 +275,7 @@ class Filesystem implements FilesystemContract
      */
     public function basename($path)
     {
+        return $this->adapter->basename($path);
     }
 
     /**
@@ -229,6 +283,7 @@ class Filesystem implements FilesystemContract
      */
     public function dirname($path)
     {
+        return $this->adapter->dirname($path);
     }
 
     /**
@@ -236,6 +291,7 @@ class Filesystem implements FilesystemContract
      */
     public function extension($path)
     {
+        return $this->adapter->extension($path);
     }
 
     /**
@@ -243,6 +299,7 @@ class Filesystem implements FilesystemContract
      */
     public function isReadable($path)
     {
+        return $this->adapter->isReadable($path);
     }
 
     /**
@@ -250,6 +307,7 @@ class Filesystem implements FilesystemContract
      */
     public function isWritable($path)
     {
+        return $this->adapter->isWritable($path);
     }
 
     /**
@@ -257,34 +315,47 @@ class Filesystem implements FilesystemContract
      */
     public function listContents($path = null, $recursive = false)
     {
+        return $this->adapter->listContents($path, $recursive);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function files($path = null, $recursive = false)
+    public function listFiles($path = null, $recursive = false)
     {
+        return $this->adapter->listFiles($path, $recursive);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function directories($path = null, $recursive = false)
+    public function listDirectories($path = null, $recursive = false)
     {
+        return $this->adapter->listDirectories($path, $recursive);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function allFiles($path = null)
+    public function listAllContents($path = null)
     {
+        return $this->adapter->listAllContents($path);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function allDirectories($path = null)
+    public function listAllFiles($path = null)
     {
+        return $this->adapter->listAllFiles($path);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function listAllDirectories($path = null)
+    {
+        return $this->adapter->listAllDirectories($path);
     }
 
     /**
@@ -292,6 +363,7 @@ class Filesystem implements FilesystemContract
      */
     public function ensureDirectoryExists($dirname, $visibility)
     {
+        return $this->adapter->ensureDirectoryExists($dirname, $visibility);
     }
 
     /**
@@ -299,5 +371,31 @@ class Filesystem implements FilesystemContract
      */
     public function glob($pattern, $flags = 0)
     {
+        return $this->adapter->glob($pattern, $flags);
+    }
+
+    /**
+     * @param mixed $contents
+     */
+    private function isResource($contents)
+    {
+        if (is_resource($contents) === false) {
+
+            throw new \Note\Filesystem\Exception\InvalidStream("Invalid stream provided, expected stream resource, received " . gettype($contents));
+        } elseif ($type = get_resource_type($contents) !== 'stream') {
+
+            throw new \Note\Filesystem\Exception\InvalidStream("Invalid stream provided, expected stream resource, received resource of type " . $type);
+        }
+    }
+
+    /**
+     * @param resource $resource
+     */
+    private function rewindStream($resource)
+    {
+        if (ftell($resource) !== 0 && stream_get_meta_data($resource)['seekable']) {
+
+            rewind($resource);
+        }
     }
 }
